@@ -4,7 +4,6 @@ Deletion-resilient hypermedia pagination
 """
 
 import csv
-import math
 from typing import List, Dict, Any
 
 
@@ -21,9 +20,9 @@ class Server:
         """Cached dataset
         """
         if self.__dataset is None:
-            with open(self.DATA_FILE) as f:
-                reader = csv.reader(f)
-                dataset = [row for row in reader]
+            with open(self.DATA_FILE, encoding='utf-8') as csv_file:
+                reader = csv.reader(csv_file)
+                dataset = list(reader)
             self.__dataset = dataset[1:]
 
         return self.__dataset
