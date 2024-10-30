@@ -5,9 +5,8 @@ Module for simple pagination
 import csv
 from typing import List
 from math import ceil
-
-
 index_range = __import__('0-simple_helper_function').index_range
+
 
 class Server:
     """Server class to paginate a database of popular baby names.
