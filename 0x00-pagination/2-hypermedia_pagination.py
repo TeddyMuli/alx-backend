@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
+"""
+Module for simple pagination
+"""
 import csv
 from typing import List
 from math import ceil
-"""Module for simple pagination
-"""
 
 
 index_range = __import__('0-simple_helper_function').index_range
@@ -20,14 +21,17 @@ class Server:
         """Cached dataset
         """
         if self.__dataset is None:
-            with open(self.DATA_FILE) as f:
-                reader = csv.reader(f)
-                dataset = [row for row in reader]
+            with open(self.DATA_FILE, encoding='utf-8') as csv_file:
+                reader = csv.reader(csv_file)
+                dataset = list(reader)
             self.__dataset = dataset[1:]
 
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """
+        Get a page from the dataset.
+        """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
@@ -40,6 +44,9 @@ class Server:
         return dataset[start_index:end_index]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """
+        Function to get summary of a page.
+        """
         data = self.get_page(page, page_size)
         dataset = self.dataset()
         total_pages = ceil(len(dataset) / page_size)
