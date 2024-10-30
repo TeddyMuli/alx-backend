@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-This module provides a helper function for calculating the start and end 
+This module provides a helper function for calculating the start and end
 indices for pagination.
 """
 
+
 def index_range(page: int, page_size: int) -> tuple:
     """
-    index_range(page: int, page_size: int) -> tuple: 
+    index_range(page: int, page_size: int) -> tuple:
         Calculates the start and end indices for a given page and page size.
 
     Calculate the start and end indices for a given page and page size.
