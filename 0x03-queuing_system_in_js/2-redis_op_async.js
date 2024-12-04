@@ -1,5 +1,6 @@
+#!/usr/bin/yarn dev
 import { promisify } from 'util';
-import { createClient } from 'redis';
+import { createClient, print } from 'redis';
 
 const client = createClient();
 
@@ -8,11 +9,11 @@ client.on('error', (err) => {
 });
 
 const setNewSchool = (schoolName, value) => {
-  client.set(schoolName, value);
+  client.SET(schoolName, value, print);
 };
 
 const displaySchoolValue = async (schoolName) => {
-  console.log(await promisify(client.get).bind(client)(schoolName));
+  console.log(await promisify(client.GET).bind(client)(schoolName));
 };
 
 async function main() {
@@ -21,6 +22,7 @@ async function main() {
   await displaySchoolValue('HolbertonSanFrancisco');
 }
 
-await client.connect();
-console.log('Redis client connected to the server');
-await main();
+client.on('connect', async () => {
+  console.log('Redis client connected to the server');
+  await main();
+});

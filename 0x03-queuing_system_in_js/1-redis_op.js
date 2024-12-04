@@ -1,4 +1,4 @@
-import { createClient } from 'redis';
+import { createClient, print } from 'redis';
 
 const client = createClient();
 
@@ -6,17 +6,18 @@ client.on('error', (err) => {
   console.log('Redis client not connected to the server:', err.toString());
 });
 
-await client.connect();
-console.log('Redis client connected to the server');
+client.on('connect', () => {
+  console.log('Redis client connected to the server');
+});
 
-const setNewSchool = async (schoolName, value) => {
-  await client.set(schoolName, value);
-  console.log('OK');
+const setNewSchool = (schoolName, value) => {
+  client.SET(schoolName, value, print);
 };
 
-const displaySchoolValue = async (schoolName) => {
-  await client.get(schoolName);
-  console.log(schoolName)
+const displaySchoolValue = (schoolName) => {
+  client.GET(schoolName, (_err, reply) => {
+    console.log(reply);
+  });
 };
 
 displaySchoolValue('Holberton');

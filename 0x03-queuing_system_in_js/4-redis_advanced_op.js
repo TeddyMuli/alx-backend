@@ -1,4 +1,5 @@
-import { createClient } from 'redis';
+#!/usr/bin/yarn dev
+import { createClient, print } from 'redis';
 
 const client = createClient();
 
@@ -7,11 +8,11 @@ client.on('error', (err) => {
 });
 
 const updateHash = (hashName, fieldName, fieldValue) => {
-  client.hSet(hashName, fieldName, fieldValue);
+  client.HSET(hashName, fieldName, fieldValue, print);
 };
 
 const printHash = (hashName) => {
-  client.hGetAll(hashName, (_err, reply) => console.log(reply));
+  client.HGETALL(hashName, (_err, reply) => console.log(reply));
 };
 
 function main() {
